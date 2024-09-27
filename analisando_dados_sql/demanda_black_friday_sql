@@ -54,3 +54,5 @@ WHERE nome_produto = 'Livro de Ficção';
 UPDATE produtos 
 set preco = 140
 WHERE nome_produto = 'Camisa';
+
+--Obs: Carregamento da base de dados, conhecendo o schema das tabelas e foi realizado as primeiras consultas.
