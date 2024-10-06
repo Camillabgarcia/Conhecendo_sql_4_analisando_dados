@@ -46,7 +46,7 @@ FROM(                                                                       --Tr
  
 
 
- --Representação das vendas por categorias(%).
+ --Consulta sobre representação das vendas por categorias(%).
 
 SELECT 
     Nome_Categoria,                              -- Seleciona o nome da categoria do produto.
@@ -64,3 +64,31 @@ FROM (
     GROUP BY Nome_Categoria                      -- Agrupa os resultados por nome da categoria.
     ORDER BY Qtd_Vendas DESC                     -- Ordena os resultados por quantidade de vendas de forma decrescente.
 );
+
+--Consulta da representação das vendas por fornecedor(%).
+
+SELECT Nome_Fornecedor, Qtd_Vendas, ROUND(100.0 * Qtd_Vendas / (SELECT COUNT(*) FROM itens_venda), 2) || '%' AS Porcentagem
+FROM(
+    SELECT f.nome AS Nome_Fornecedor, COUNT(iv.produto_id) AS Qtd_Vendas
+    FROM itens_venda iv
+    JOIN vendas v ON v.id_venda = iv.venda_id
+    JOIN produtos p ON p.id_produto = iv.produto_id
+    JOIN fornecedores f ON f.id_fornecedor = p.fornecedor_id
+    GROUP BY Nome_Fornecedor
+    ORDER BY Qtd_Vendas DESC
+    )
+;
+
+--Consulta da representação das vendas por marca(%).
+
+SELECT Nome_Marca, Qtd_Vendas, ROUND(100.0 * Qtd_Vendas / (SELECT COUNT(*) FROM itens_venda), 2) || '%' AS Porcentagem
+FROM(
+    SELECT m.nome AS Nome_Marca, COUNT(iv.produto_id) AS Qtd_Vendas
+    FROM itens_venda iv
+    JOIN vendas v ON v.id_venda = iv.venda_id
+    JOIN produtos p ON p.id_produto = iv.produto_id
+    JOIN marcas m ON m.id_marca = p.marca_id
+    GROUP BY Nome_Marca
+    ORDER BY Qtd_Vendas DESC
+    )
+;
