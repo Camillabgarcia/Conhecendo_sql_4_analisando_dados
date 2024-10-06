@@ -58,7 +58,7 @@ from (
   GROUP by Nome_fornecedor, "Ano/Mês"
   ORDER by "Ano/Mês", Qtd_Vendas);
 
---Trazendo informaçções do fornecedor (NebulaNetworks) que teve a pior performance na última Black Friday ao longo do tempo:
+--Trazendo informações do fornecedor (NebulaNetworks) que teve a pior performance na última Black Friday ao longo do tempo:
   SELECT STRFTIME('%Y/%m', v.data_venda) AS "Ano/Mês", COUNT(iv.produto_id) as Qtd_vendas
   from itens_venda iv
   JOIN vendas v
